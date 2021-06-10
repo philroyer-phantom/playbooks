@@ -80,7 +80,7 @@ def filter_1(action=None, success=None, container=None, results=None, handle=Non
 
     # call connected blocks if filtered artifacts or results
     if matched_artifacts_2 or matched_results_2:
-        action_0(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_2, filtered_results=matched_results_2)
+        pass
 
     return
 
@@ -106,17 +106,6 @@ def Pin_Check_Priv_Auth_Activity(action=None, success=None, container=None, resu
     formatted_data_1 = phantom.get_format_data(name='Format_Pin_Check_Priv_Auth_Activity')
 
     phantom.pin(container=container, data=formatted_data_1, message="Priv Auth Activities Detected", name="Priv Auth Activities Detected")
-
-    return
-
-def action_0(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug('action_0() called')
-        
-    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
-
-    parameters = []
-
-    phantom.act(action="<undefined>", parameters=parameters, name="action_0")
 
     return
 
