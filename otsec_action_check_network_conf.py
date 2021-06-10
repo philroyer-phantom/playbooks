@@ -78,6 +78,7 @@ def Pin_OT_Asset_Info(action=None, success=None, container=None, results=None, h
     formatted_data_1 = phantom.get_format_data(name='Format_Pin_OT_Asset_Info')
 
     phantom.pin(container=container, data=formatted_data_1, message="Check Network Config", pin_type="card", pin_style="red", name="Check Network Config")
+    action_0(container=container)
 
     return
 
@@ -147,6 +148,17 @@ def add_note_22(action=None, success=None, container=None, results=None, handle=
     note_content = formatted_data_1
     note_format = "markdown"
     phantom.add_note(container=container, note_type="general", title=note_title, content=note_content, note_format=note_format)
+
+    return
+
+def action_0(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('action_0() called')
+        
+    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    parameters = []
+
+    phantom.act(action="<undefined>", parameters=parameters, name="action_0")
 
     return
 
