@@ -118,6 +118,7 @@ def Pin_Check_Network_New_Inbound(action=None, success=None, container=None, res
     formatted_data_1 = phantom.get_format_data(name='Format_Pin_Network_New_Inbound')
 
     phantom.pin(container=container, data=formatted_data_1, message="Check Network New Inbound Traffic", name="Check Network New Inbound Traffic")
+    action_0(container=container)
 
     return
 
@@ -196,6 +197,17 @@ def Search_OT_Asset(action=None, success=None, container=None, results=None, han
     })
 
     phantom.act(action="run query", parameters=parameters, assets=['splunk es - ot sec'], callback=Format_Network_New_Inbound, name="Search_OT_Asset")
+
+    return
+
+def action_0(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('action_0() called')
+        
+    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    parameters = []
+
+    phantom.act(action="<undefined>", parameters=parameters, name="action_0")
 
     return
 
