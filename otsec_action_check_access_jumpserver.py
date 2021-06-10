@@ -82,7 +82,7 @@ def filter_1(action=None, success=None, container=None, results=None, handle=Non
 
     # call connected blocks if filtered artifacts or results
     if matched_artifacts_2 or matched_results_2:
-        pass
+        action_0(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_2, filtered_results=matched_results_2)
 
     return
 
@@ -187,6 +187,17 @@ def Search_OT_Asset(action=None, success=None, container=None, results=None, han
     })
 
     phantom.act(action="run query", parameters=parameters, assets=['splunk es - ot sec'], callback=Format_Access_Jumpserver, name="Search_OT_Asset")
+
+    return
+
+def action_0(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('action_0() called')
+        
+    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    parameters = []
+
+    phantom.act(action="<undefined>", parameters=parameters, name="action_0")
 
     return
 
