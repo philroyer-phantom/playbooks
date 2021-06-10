@@ -83,7 +83,7 @@ def Filter_Login_Result(action=None, success=None, container=None, results=None,
 
     # call connected blocks if filtered artifacts or results
     if matched_artifacts_2 or matched_results_2:
-        pass
+        action_0(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_2, filtered_results=matched_results_2)
 
     return
 
@@ -158,6 +158,17 @@ def Add_Notes(action=None, success=None, container=None, results=None, handle=No
     phantom.add_tags(container=container, tags="MITRE T0818")
 
     phantom.add_list("Login_List", results_item_1_0)
+
+    return
+
+def action_0(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('action_0() called')
+        
+    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
+
+    parameters = []
+
+    phantom.act(action="<undefined>", parameters=parameters, name="action_0")
 
     return
 
