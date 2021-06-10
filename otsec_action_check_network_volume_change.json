@@ -7,7 +7,6 @@
             "clean": true,
             "code_block": "",
             "description": "",
-            "hash": "0a1dd083313b74f563b40050ca0a97fedc04930d",
             "joint": {
                 "cells": [
                     {
@@ -2855,6 +2854,61 @@
                         "type": "coa.Format",
                         "warn": false,
                         "z": 222
+                    },
+                    {
+                        "attrs": {
+                            ".connection": {
+                                "stroke": "#818D99",
+                                "stroke-width": 2
+                            },
+                            ".marker-target": {
+                                "d": "M 10 0 L 0 5 L 10 10 z",
+                                "fill": "#818D99",
+                                "stroke": "#818D99"
+                            }
+                        },
+                        "connector": {
+                            "args": {
+                                "radius": 5
+                            },
+                            "name": "rounded"
+                        },
+                        "endDirections": [
+                            "left"
+                        ],
+                        "id": "c89b8cca-aca1-46e7-9058-48168afbc846",
+                        "router": {
+                            "name": "metro"
+                        },
+                        "source": {
+                            "id": "a3c5dfbe-5e16-4d1f-a039-c564e701f3c5",
+                            "selector": "> g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
+                        },
+                        "startDirections": [
+                            "right"
+                        ],
+                        "target": {
+                            "id": "4d350b10-3766-42a6-82a8-066b0dbe1190"
+                        },
+                        "type": "link",
+                        "z": 223
+                    },
+                    {
+                        "angle": 0,
+                        "attrs": {},
+                        "connection_name": "Check Network Volume Change",
+                        "connection_type": "action",
+                        "id": "4d350b10-3766-42a6-82a8-066b0dbe1190",
+                        "position": {
+                            "x": 1500,
+                            "y": 580
+                        },
+                        "size": {
+                            "height": 40,
+                            "width": 40
+                        },
+                        "type": "coa.Selector",
+                        "z": 224
                     }
                 ]
             },
