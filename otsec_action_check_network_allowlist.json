@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "",
-            "hash": "4a179922dcaf92019e5019676151065a0f1de1cb",
+            "hash": "cc9001e5462cf44b36c14d5ce03ad5e773cbfd93",
             "joint": {
                 "cells": [
                     {
@@ -112,12 +112,12 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 221,
-                        "line_start": 208,
+                        "line_end": 209,
+                        "line_start": 196,
                         "name": "",
                         "notes": "",
                         "number": 0,
-                        "order": 12,
+                        "order": 11,
                         "outPorts": [],
                         "ports": {
                             "groups": {
@@ -1283,8 +1283,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 197,
-                        "line_start": 177,
+                        "line_end": 196,
+                        "line_start": 176,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -1451,8 +1451,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 177,
-                        "line_start": 156,
+                        "line_end": 176,
+                        "line_start": 155,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -2362,7 +2362,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Pin_Check_Network_Sessions(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Pin_Check_Network_Sessions() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Format_Network_Sessions')\n\n    phantom.pin(container=container, data=formatted_data_1, message=\"Check for allowed hosts/users for the asset\", name=\"Check for allowed hosts/users for the asset\")\n    action_0(container=container)\n\n    return",
+                        "block_code": "def Pin_Check_Network_Sessions(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Pin_Check_Network_Sessions() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Format_Network_Sessions')\n\n    phantom.pin(container=container, data=formatted_data_1, message=\"Check for allowed hosts/users for the asset\", name=\"Check for allowed hosts/users for the asset\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -2398,7 +2398,7 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 121,
+                        "line_end": 120,
                         "line_start": 111,
                         "message": "Configuring now",
                         "name": "pin",
@@ -2574,8 +2574,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 156,
-                        "line_start": 144,
+                        "line_end": 155,
+                        "line_start": 143,
                         "message": "Configuring now",
                         "name": "add note",
                         "notes": "",
@@ -2738,8 +2738,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 144,
-                        "line_start": 121,
+                        "line_end": 143,
+                        "line_start": 120,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -2830,206 +2830,6 @@
                         "type": "coa.Format",
                         "warn": false,
                         "z": 133
-                    },
-                    {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "0e115655-f68c-4af5-85a6-bd902920225d",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "a3c5dfbe-5e16-4d1f-a039-c564e701f3c5",
-                            "selector": "> g:nth-child(1) > g:nth-child(2) > g:nth-child(1) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "696b2b5c-2990-4dde-a35a-2263c0e9b1ce",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 134
-                    },
-                    {
-                        "active": false,
-                        "active_keys": {},
-                        "active_values": {},
-                        "angle": 0,
-                        "app": "",
-                        "approver": "",
-                        "assets": [],
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#E6984E"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 1
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            }
-                        },
-                        "block_code": "def action_0(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('action_0() called')\n        \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n\n    parameters = []\n\n    phantom.act(action=\"<undefined>\", parameters=parameters, name=\"action_0\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
-                        "connected_to_start": true,
-                        "connection_name": "Check Network Sessions",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "696b2b5c-2990-4dde-a35a-2263c0e9b1ce",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 208,
-                        "line_start": 197,
-                        "message": "Configuring now",
-                        "name": "action",
-                        "notes": "",
-                        "number": 0,
-                        "order": 11,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1460,
-                            "y": 360
-                        },
-                        "previous_function": "",
-                        "previous_name": "",
-                        "required_params": {},
-                        "reviewer": "",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "apps",
-                        "status": "warn",
-                        "type": "coa.Action",
-                        "warn": false,
-                        "z": 136
                     }
                 ]
             },
@@ -3039,7 +2839,7 @@
         "schema": 4,
         "version": "4.9.34514"
     },
-    "create_time": "2021-06-10T21:57:03.946468+00:00",
+    "create_time": "2021-06-10T21:57:16.301025+00:00",
     "draft_mode": false,
     "labels": [
         "*"
