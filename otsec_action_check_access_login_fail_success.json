@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "",
-            "hash": "17b3875d28bbd3ef50e56fe720eab56a5d4d7dd6",
+            "hash": "b30109e80300f01edcb5f1e956e9cf134b0d3560",
             "joint": {
                 "cells": [
                     {
@@ -295,12 +295,12 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 188,
-                        "line_start": 175,
+                        "line_end": 177,
+                        "line_start": 164,
                         "name": "",
                         "notes": "",
                         "number": 0,
-                        "order": 10,
+                        "order": 9,
                         "outPorts": [],
                         "ports": {
                             "groups": {
@@ -917,7 +917,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Filter_Login_Result(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Filter_Login_Result() called')\n\n    # collect filtered artifact ids for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Login_Failures_Successes:action_result.summary.total_events\", \">\", 0],\n        ],\n        name=\"Filter_Login_Result:condition_1\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_1 or matched_results_1:\n        Format_Pin_Login_Failures_Success(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n        Add_Note_Format(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n\n    # collect filtered artifact ids for 'if' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Login_Failures_Successes:action_result.summary.total_events\", \"==\", 0],\n        ],\n        name=\"Filter_Login_Result:condition_2\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_2 or matched_results_2:\n        action_0(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_2, filtered_results=matched_results_2)\n\n    return",
+                        "block_code": "def Filter_Login_Result(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Filter_Login_Result() called')\n\n    # collect filtered artifact ids for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Login_Failures_Successes:action_result.summary.total_events\", \">\", 0],\n        ],\n        name=\"Filter_Login_Result:condition_1\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_1 or matched_results_1:\n        Format_Pin_Login_Failures_Success(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n        Add_Note_Format(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n\n    # collect filtered artifact ids for 'if' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Login_Failures_Successes:action_result.summary.total_events\", \"==\", 0],\n        ],\n        name=\"Filter_Login_Result:condition_2\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_2 or matched_results_2:\n        pass\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -1634,178 +1634,6 @@
                     {
                         "active": false,
                         "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".format": {
-                                "text": "Format Pin Login Failure..."
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def Format_Pin_Login_Failures_Success(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Pin_Login_Failures_Success() called')\n    \n    template = \"\"\"Total {0} Records Detected for Review\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"filtered-data:Filter_Login_Result:condition_1:Check_Login_Failures_Successes:action_result.summary.total_events\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Pin_Login_Failures_Success\")\n\n    Pin_Check_Login_Failures_Successes(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "Check Login Failures Successes",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Format Pin Login Failures Success",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "5b199e51-d88b-4e34-a748-90886b05e094",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 106,
-                        "line_start": 90,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 2,
-                        "order": 5,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "filtered-data:Filter_Login_Result:condition_1:Check_Login_Failures_Successes:action_result.summary.total_events"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 960,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "Format_Pin_Login_Failures_Success",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "Total {0} Records Detected for Review",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 95
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
                         "api": "add note, add comment, add tag, add list",
                         "attrs": {
                             ".api": {
@@ -2187,60 +2015,18 @@
                         "z": 98
                     },
                     {
-                        "attrs": {
-                            ".connection": {
-                                "stroke": "#818D99",
-                                "stroke-width": 2
-                            },
-                            ".marker-target": {
-                                "d": "M 10 0 L 0 5 L 10 10 z",
-                                "fill": "#818D99",
-                                "stroke": "#818D99"
-                            }
-                        },
-                        "connector": {
-                            "args": {
-                                "radius": 5
-                            },
-                            "name": "rounded"
-                        },
-                        "endDirections": [
-                            "left"
-                        ],
-                        "id": "b06672f7-a9ac-4867-80a1-1df8df5b4c28",
-                        "router": {
-                            "name": "metro"
-                        },
-                        "source": {
-                            "id": "f9ba3762-65c4-49a8-80db-62f2965904c6",
-                            "port": "out-2",
-                            "selector": "> g:nth-child(1) > g:nth-child(2) > g:nth-child(2) > circle:nth-child(1)"
-                        },
-                        "startDirections": [
-                            "right"
-                        ],
-                        "target": {
-                            "id": "0376df24-f1ad-4eae-98d1-f41c9270da8c",
-                            "selector": ".port-body[type=\"input\"]"
-                        },
-                        "type": "link",
-                        "z": 99
-                    },
-                    {
                         "active": false,
-                        "active_keys": {},
-                        "active_values": {},
                         "angle": 0,
-                        "app": "",
-                        "approver": "",
-                        "assets": [],
                         "attrs": {
                             ".background": {
                                 "fill": "#000000",
-                                "stroke": "#E6984E"
+                                "stroke": "#5C6773"
                             },
                             ".color-band": {
                                 "fill": "#3C444D"
+                            },
+                            ".format": {
+                                "text": "Format Pin Login Failure..."
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2254,67 +2040,80 @@
                             },
                             ".message": {
                                 "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
                                 "text": "Configuring now"
                             },
-                            ".outPorts>.port-out": {
+                            ".outPorts>.port-out-1": {
                                 "ref": ".background",
                                 "ref-x": 0.5
                             },
-                            ".outPorts>.port-out>.port-body": {
+                            ".outPorts>.port-out-1>.port-body": {
                                 "port": {
-                                    "id": "out",
+                                    "id": "out-1",
                                     "type": "out"
                                 }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
                             },
                             "g.delete": {
                                 "display": "none"
                             },
                             "g.error": {
-                                "opacity": 1
+                                "opacity": 0
                             },
                             "g.error image": {
                                 "xlink:href": "/inc/coa/img/block_icon_warn.svg"
                             },
                             "g.notes": {
                                 "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
                             }
                         },
-                        "block_code": "def action_0(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('action_0() called')\n        \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n\n    parameters = []\n\n    phantom.act(action=\"<undefined>\", parameters=parameters, name=\"action_0\")\n\n    return",
+                        "block_code": "def Format_Pin_Login_Failures_Success(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Pin_Login_Failures_Success() called')\n    \n    template = \"\"\"Total {0} Records Detected for Review\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"filtered-data:Filter_Login_Result:condition_1:Check_Login_Failures_Successes:action_result.summary.total_events\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Pin_Login_Failures_Success\")\n\n    Pin_Check_Login_Failures_Successes(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
-                        "callsback": true,
-                        "color": "",
+                        "callsback": false,
                         "connected_to_start": true,
                         "connection_name": "Check Login Failures Successes",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "",
-                        "delay": 0,
+                        "custom_name": "Format Pin Login Failures Success",
                         "description": "",
+                        "format": "format",
                         "has_custom": false,
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "0376df24-f1ad-4eae-98d1-f41c9270da8c",
+                        "id": "5b199e51-d88b-4e34-a748-90886b05e094",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 175,
-                        "line_start": 164,
+                        "line_end": 106,
+                        "line_start": 90,
                         "message": "Configuring now",
-                        "name": "action",
+                        "name": "format",
                         "notes": "",
-                        "number": 0,
-                        "order": 9,
+                        "number": 2,
+                        "order": 5,
                         "outPorts": [
-                            "out"
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 0,
+                                "type": "",
+                                "value": "filtered-data:Filter_Login_Result:condition_1:Check_Login_Failures_Successes:action_result.summary.total_events"
+                            }
                         ],
                         "ports": {
                             "groups": {
@@ -2369,23 +2168,23 @@
                             }
                         },
                         "position": {
-                            "x": 860,
-                            "y": 320
+                            "x": 960,
+                            "y": 80
                         },
                         "previous_function": "",
-                        "previous_name": "",
-                        "required_params": {},
-                        "reviewer": "",
-                        "show_number": false,
+                        "previous_name": "Format_Pin_Login_Failures_Success",
+                        "show_number": true,
                         "size": {
                             "height": 100,
                             "width": 180
                         },
-                        "state": "apps",
-                        "status": "warn",
-                        "type": "coa.Action",
+                        "state": "format",
+                        "status": "",
+                        "template": "Total {0} Records Detected for Review",
+                        "title": "format",
+                        "type": "coa.Format",
                         "warn": false,
-                        "z": 101
+                        "z": 99
                     }
                 ]
             },
@@ -2395,7 +2194,7 @@
         "schema": 4,
         "version": "4.9.34514"
     },
-    "create_time": "2021-06-10T21:29:00.551449+00:00",
+    "create_time": "2021-06-10T21:29:15.685487+00:00",
     "draft_mode": false,
     "labels": [
         "*"
