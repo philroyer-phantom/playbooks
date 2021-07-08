@@ -1,4 +1,5 @@
 """
+Search the notable index of the connected Splunk instance to retrieve all notable events from the past 24 hours with a matching value in the "dvc" field. Format the results and present them in a note within the event.
 """
 
 import phantom.rules as phantom
