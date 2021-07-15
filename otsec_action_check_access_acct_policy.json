@@ -7,7 +7,6 @@
             "clean": true,
             "code_block": "",
             "description": "",
-            "hash": "ba8198084b4f6745c8d275da38d8fda49a0b9d90",
             "joint": {
                 "cells": [
                     {
@@ -1229,7 +1228,7 @@
                             },
                             ".background": {
                                 "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "stroke": "#E6984E"
                             },
                             ".color-band": {
                                 "fill": "#3C444D"
@@ -1273,7 +1272,7 @@
                                 "display": "none"
                             },
                             "g.error": {
-                                "opacity": 0
+                                "opacity": 1
                             },
                             "g.error image": {
                                 "xlink:href": "/inc/coa/img/block_icon_warn.svg"
@@ -1394,7 +1393,7 @@
                             "width": 180
                         },
                         "state": "app_action_assets",
-                        "status": "",
+                        "status": "warn",
                         "title": "Investigate",
                         "type": "coa.Action",
                         "warn": false,
@@ -2384,7 +2383,7 @@
                             },
                             ".background": {
                                 "fill": "#000000",
-                                "stroke": "#5C6773"
+                                "stroke": "#E6984E"
                             },
                             ".color-band": {
                                 "fill": "#3C444D"
@@ -2428,7 +2427,7 @@
                                 "display": "none"
                             },
                             "g.error": {
-                                "opacity": 0
+                                "opacity": 1
                             },
                             "g.error image": {
                                 "xlink:href": "/inc/coa/img/block_icon_warn.svg"
@@ -2549,7 +2548,7 @@
                             "width": 180
                         },
                         "state": "app_action_assets",
-                        "status": "",
+                        "status": "warn",
                         "title": "Investigate",
                         "type": "coa.Action",
                         "warn": false,
@@ -2878,9 +2877,9 @@
         },
         "python_version": "2.7",
         "schema": 4,
-        "version": "4.9.34514"
+        "version": "4.10.2.47587"
     },
-    "create_time": "2021-06-10T21:24:31.761151+00:00",
+    "create_time": "2021-06-10T21:24:32+00:00",
     "draft_mode": false,
     "labels": [
         "*"
