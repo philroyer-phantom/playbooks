@@ -7,7 +7,7 @@
             "clean": true,
             "code_block": "",
             "description": "",
-            "hash": "68eb5d89e0cbd85acdc1e65b4b0bff5ef21b18a7",
+            "hash": "b8d3f51f6f43d9ab792b9937be429c640391b1c8",
             "joint": {
                 "cells": [
                     {
@@ -94,7 +94,7 @@
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Check Software Updates, Check Software Updates, Check Software Updates",
+                        "connection_name": "Check Software Sandbox Status, Check Software Sandbox Status, Check Software Sandbox Status",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -112,8 +112,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 212,
-                        "line_start": 199,
+                        "line_end": 203,
+                        "line_start": 190,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -770,198 +770,6 @@
                         "attrs": {
                             ".background": {
                                 "fill": "#000000",
-                                "stroke": "#5C6773",
-                                "transform": "rotate(45 30 70)"
-                            },
-                            ".inPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".number": {
-                                "text": 1
-                            },
-                            ".outPorts>.port-0": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                },
-                                "ref-x": 83,
-                                "ref-y": 40
-                            },
-                            ".outPorts>.port-0>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".outPorts>.port-1": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                },
-                                "ref-x": 41,
-                                "ref-y": 82
-                            },
-                            ".outPorts>.port-1>.port-body": {
-                                "port": {
-                                    "id": "out-2",
-                                    "type": "out"
-                                }
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def filter_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('filter_1() called')\n\n    # collect filtered artifact ids for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Software_Updates:action_result.summary.total_events\", \">\", 0],\n        ],\n        name=\"filter_1:condition_1\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_1 or matched_results_1:\n        Format_Pin_Format_Software_Updates(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n        Add_Note_Format(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n\n    # collect filtered artifact ids for 'if' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Software_Updates:action_result.summary.total_events\", \"==\", 0],\n        ],\n        name=\"filter_1:condition_2\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_2 or matched_results_2:\n        pass\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "Check Software Updates",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "f9ba3762-65c4-49a8-80db-62f2965904c6",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 92,
-                        "line_start": 60,
-                        "name": "filter",
-                        "notes": "",
-                        "number": 1,
-                        "order": 4,
-                        "outPorts": [
-                            "out-1",
-                            "out-2"
-                        ],
-                        "outputs": [
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": ">",
-                                        "data_type": "",
-                                        "param": "Check_Software_Updates:action_result.summary.total_events",
-                                        "value": "0"
-                                    }
-                                ],
-                                "display": "If",
-                                "logic": "and",
-                                "type": "if"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "comparison": "==",
-                                        "data_type": "",
-                                        "param": "Check_Software_Updates:action_result.summary.total_events",
-                                        "value": "0"
-                                    }
-                                ],
-                                "display": "If",
-                                "logic": "and",
-                                "type": "if"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 780,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "filter_1",
-                        "show_number": true,
-                        "size": {
-                            "height": 82,
-                            "width": 82
-                        },
-                        "state": "filter",
-                        "status": "",
-                        "type": "coa.Filter",
-                        "warn": false,
-                        "z": 81
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
                                 "stroke": "#5C6773"
                             },
                             ".color-band": {
@@ -1040,8 +848,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 179,
-                        "line_start": 158,
+                        "line_end": 170,
+                        "line_start": 149,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -1126,7 +934,199 @@
                         "title": "format",
                         "type": "coa.Format",
                         "warn": false,
-                        "z": 133
+                        "z": 117
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773",
+                                "transform": "rotate(45 30 70)"
+                            },
+                            ".inPorts>.port-0>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".number": {
+                                "text": 1
+                            },
+                            ".outPorts>.port-0": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                },
+                                "ref-x": 83,
+                                "ref-y": 40
+                            },
+                            ".outPorts>.port-0>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".outPorts>.port-1": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                },
+                                "ref-x": 41,
+                                "ref-y": 82
+                            },
+                            ".outPorts>.port-1>.port-body": {
+                                "port": {
+                                    "id": "out-2",
+                                    "type": "out"
+                                }
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def filter_1(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('filter_1() called')\n\n    # collect filtered artifact ids for 'if' condition 1\n    matched_artifacts_1, matched_results_1 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Software_Sandbox_Status:action_result.summary.total_events\", \">\", 0],\n        ],\n        name=\"filter_1:condition_1\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_1 or matched_results_1:\n        Format_Pin_Software_Sandbox_Status(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n        Add_Note_Format(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)\n\n    # collect filtered artifact ids for 'if' condition 2\n    matched_artifacts_2, matched_results_2 = phantom.condition(\n        container=container,\n        action_results=results,\n        conditions=[\n            [\"Check_Software_Sandbox_Status:action_result.summary.total_events\", \"==\", 0],\n        ],\n        name=\"filter_1:condition_2\")\n\n    # call connected blocks if filtered artifacts or results\n    if matched_artifacts_2 or matched_results_2:\n        pass\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "Check Software Sandbox Status",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "f9ba3762-65c4-49a8-80db-62f2965904c6",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 89,
+                        "line_start": 57,
+                        "name": "filter",
+                        "notes": "",
+                        "number": 1,
+                        "order": 4,
+                        "outPorts": [
+                            "out-1",
+                            "out-2"
+                        ],
+                        "outputs": [
+                            {
+                                "conditions": [
+                                    {
+                                        "comparison": ">",
+                                        "data_type": "",
+                                        "param": "Check_Software_Sandbox_Status:action_result.summary.total_events",
+                                        "value": "0"
+                                    }
+                                ],
+                                "display": "If",
+                                "logic": "and",
+                                "type": "if"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "comparison": "==",
+                                        "data_type": "",
+                                        "param": "Check_Software_Sandbox_Status:action_result.summary.total_events",
+                                        "value": "0"
+                                    }
+                                ],
+                                "display": "If",
+                                "logic": "and",
+                                "type": "if"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 780,
+                            "y": 80
+                        },
+                        "previous_function": "",
+                        "previous_name": "filter_1",
+                        "show_number": true,
+                        "size": {
+                            "height": 82,
+                            "width": 82
+                        },
+                        "state": "filter",
+                        "status": "",
+                        "type": "coa.Filter",
+                        "warn": false,
+                        "z": 197
                     },
                     {
                         "action": "run query",
@@ -1430,7 +1430,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Search_OT_Asset(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Search_OT_Asset() called')\n\n    # collect data for 'Search_OT_Asset' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Asset_Lookup')\n\n    parameters = []\n    \n    # build parameters list for 'Search_OT_Asset' call\n    parameters.append({\n        'query': formatted_data_1,\n        'command': \"\",\n        'display': \"\",\n        'parse_only': \"\",\n    })\n\n    phantom.act(action=\"run query\", parameters=parameters, assets=['splunk es - ot sec'], callback=Format_Software_Updates, name=\"Search_OT_Asset\")\n\n    return",
+                        "block_code": "def Search_OT_Asset(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Search_OT_Asset() called')\n\n    # collect data for 'Search_OT_Asset' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Asset_Lookup')\n\n    parameters = []\n    \n    # build parameters list for 'Search_OT_Asset' call\n    parameters.append({\n        'query': formatted_data_1,\n        'command': \"\",\n        'display': \"\",\n        'parse_only': \"\",\n    })\n\n    phantom.act(action=\"run query\", parameters=parameters, assets=['splunk es - ot sec'], callback=Format_Software_Sandbox_Status, name=\"Search_OT_Asset\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -1455,8 +1455,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 199,
-                        "line_start": 179,
+                        "line_end": 190,
+                        "line_start": 170,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -1537,358 +1537,7 @@
                         "title": "Investigate",
                         "type": "coa.Action",
                         "warn": false,
-                        "z": 139
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".format": {
-                                "text": "Format Software Updates"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def Format_Software_Updates(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Software_Updates() called')\n    \n    template = \"\"\"`get_ot_assets_sw`\n| search nt_host=\\\"{0}\\\" | eval cve=mvdedup(cve)\n| rex field=asset_name mode=sed \\\"s/\\\\d+\\\\.[\\\\d\\\\.]+//g\\\"\n| stats values(version) as version, dc(version) as version_cnt, last(asset_vendor) as asset_vendor, last(asset_type) as asset_type, last(asset_model) as asset_model, last(priority) as priority by nt_host, asset_name\n| search version_cnt>1\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"artifact:*.cef.dvc\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Software_Updates\")\n\n    Check_Software_Updates(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "Search OT Asset",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Format Software Updates",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "8dd09743-0448-431e-a0d6-278974f6c06a",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 35,
-                        "line_start": 15,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 1,
-                        "order": 2,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "artifact:*.cef.dvc"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 280,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "Format_Software_Updates",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "`get_ot_assets_sw`\n| search nt_host=\"{0}\" | eval cve=mvdedup(cve)\n| rex field=asset_name mode=sed \"s/\\d+\\.[\\d\\.]+//g\"\n| stats values(version) as version, dc(version) as version_cnt, last(asset_vendor) as asset_vendor, last(asset_type) as asset_type, last(asset_model) as asset_model, last(priority) as priority by nt_host, asset_name\n| search version_cnt>1",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 140
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "api": "pin",
-                        "attrs": {
-                            ".api": {
-                                "text": "Pin Check Software Upd..."
-                            },
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "API"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def Pin_Check_Software_Updates(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Pin_Check_Software_Updates() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Format_Software_Updates')\n\n    phantom.pin(container=container, data=formatted_data_1, message=\"Check for software updates detected\", name=\"Check for software updates detected\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "color": "",
-                        "configured": [
-                            {
-                                "key": "pin",
-                                "pinData": "Format_Pin_Format_Software_Updates:formatted_data",
-                                "pinMessage": "Check for software updates detected",
-                                "pinName": "Check for software updates detected",
-                                "pinPinColor": "red",
-                                "pinPinColor_display": "Red",
-                                "pinPinType": "data",
-                                "pinPinType_display": "data"
-                            }
-                        ],
-                        "connected_to_start": true,
-                        "connection_name": "Check Software Updates",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Pin Check Software Updates",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "a3c5dfbe-5e16-4d1f-a039-c564e701f3c5",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 117,
-                        "line_start": 108,
-                        "message": "Configuring now",
-                        "name": "pin",
-                        "notes": "",
-                        "number": 1,
-                        "order": 6,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1220,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "Pin_Check_Software_Updates",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "api",
-                        "status": "",
-                        "title": "API",
-                        "type": "coa.API",
-                        "warn": false,
-                        "z": 146
+                        "z": 212
                     },
                     {
                         "action": "run query",
@@ -1899,7 +1548,7 @@
                             "command": "",
                             "display": "",
                             "parse_only": "",
-                            "query": "Format_Software_Updates:formatted_data"
+                            "query": "Format_Software_Sandbox_Status:formatted_data"
                         },
                         "angle": 0,
                         "app": "Splunk",
@@ -1927,7 +1576,7 @@
                                     "command": "",
                                     "display": "",
                                     "parse_only": "",
-                                    "query": "Format_Software_Updates:formatted_data"
+                                    "query": "Format_Software_Sandbox_Status:formatted_data"
                                 },
                                 "has_app": true,
                                 "id": 8,
@@ -2126,7 +1775,7 @@
                         ],
                         "attrs": {
                             ".action": {
-                                "text": "Check Software Updates"
+                                "text": "Check Software Sandbox..."
                             },
                             ".background": {
                                 "fill": "#000000",
@@ -2192,7 +1841,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Check_Software_Updates(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Check_Software_Updates() called')\n        \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Check_Software_Updates' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Software_Updates')\n\n    parameters = []\n    \n    # build parameters list for 'Check_Software_Updates' call\n    parameters.append({\n        'query': formatted_data_1,\n        'command': \"\",\n        'display': \"\",\n        'parse_only': \"\",\n    })\n\n    phantom.act(action=\"run query\", parameters=parameters, assets=['splunk es - ot sec'], callback=filter_1, name=\"Check_Software_Updates\")\n\n    return",
+                        "block_code": "def Check_Software_Sandbox_Status(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Check_Software_Sandbox_Status() called')\n        \n    #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))\n    \n    # collect data for 'Check_Software_Sandbox_Status' call\n    formatted_data_1 = phantom.get_format_data(name='Format_Software_Sandbox_Status')\n\n    parameters = []\n    \n    # build parameters list for 'Check_Software_Sandbox_Status' call\n    parameters.append({\n        'query': formatted_data_1,\n        'command': \"\",\n        'display': \"\",\n        'parse_only': \"\",\n    })\n\n    phantom.act(action=\"run query\", parameters=parameters, assets=['splunk es - ot sec'], callback=filter_1, name=\"Check_Software_Sandbox_Status\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": true,
@@ -2203,8 +1852,8 @@
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Check Software Updates",
-                        "delay": "0",
+                        "custom_name": "Check Software Sandbox Status",
+                        "delay": 0,
                         "description": "Search for Access priv logins to the asset",
                         "has_custom": false,
                         "has_custom_block": false,
@@ -2217,8 +1866,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 60,
-                        "line_start": 38,
+                        "line_end": 57,
+                        "line_start": 35,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -2284,7 +1933,7 @@
                             "y": 80
                         },
                         "previous_function": "",
-                        "previous_name": "Check_Software_Updates",
+                        "previous_name": "Check_Software_Sandbox_Status",
                         "required_params": {
                             "query": true
                         },
@@ -2299,7 +1948,7 @@
                         "title": "Investigate",
                         "type": "coa.Action",
                         "warn": false,
-                        "z": 147
+                        "z": 239
                     },
                     {
                         "active": false,
@@ -2313,7 +1962,7 @@
                                 "fill": "#3C444D"
                             },
                             ".format": {
-                                "text": "Format Pin Format Soft..."
+                                "text": "Format Pin Software San..."
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2361,17 +2010,17 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Format_Pin_Format_Software_Updates(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Pin_Format_Software_Updates() called')\n    \n    template = \"\"\"Total {0} Records Detected for Review\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"filtered-data:filter_1:condition_1:Check_Software_Updates:action_result.summary.total_events\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Pin_Format_Software_Updates\")\n\n    Pin_Check_Software_Updates(container=container)\n\n    return",
+                        "block_code": "def Format_Pin_Software_Sandbox_Status(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Pin_Software_Sandbox_Status() called')\n    \n    template = \"\"\"Total {0} Records Detected for Review\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"filtered-data:filter_1:condition_1:Check_Software_Sandbox_Status:action_result.summary.total_events\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Pin_Software_Sandbox_Status\")\n\n    Pin_Check_Software_Sandbox_Status(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Check Software Updates",
+                        "connection_name": "Check Software Sandbox Status",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Format Pin Format Software Updates",
+                        "custom_name": "Format Pin Software Sandbox Status",
                         "description": "",
                         "format": "format",
                         "has_custom": false,
@@ -2385,8 +2034,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 108,
-                        "line_start": 92,
+                        "line_end": 105,
+                        "line_start": 89,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
@@ -2399,7 +2048,7 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "filtered-data:filter_1:condition_1:Check_Software_Updates:action_result.summary.total_events"
+                                "value": "filtered-data:filter_1:condition_1:Check_Software_Sandbox_Status:action_result.summary.total_events"
                             }
                         ],
                         "ports": {
@@ -2459,7 +2108,7 @@
                             "y": 80
                         },
                         "previous_function": "",
-                        "previous_name": "Format_Pin_Format_Software_Updates",
+                        "previous_name": "Format_Pin_Software_Sandbox_Status",
                         "show_number": true,
                         "size": {
                             "height": 100,
@@ -2471,21 +2120,22 @@
                         "title": "format",
                         "type": "coa.Format",
                         "warn": false,
-                        "z": 150
+                        "z": 240
                     },
                     {
                         "active": false,
                         "angle": 0,
+                        "api": "pin",
                         "attrs": {
+                            ".api": {
+                                "text": "Pin Check Software Sand..."
+                            },
                             ".background": {
                                 "fill": "#000000",
                                 "stroke": "#5C6773"
                             },
                             ".color-band": {
                                 "fill": "#3C444D"
-                            },
-                            ".format": {
-                                "text": "Add Note Format"
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -2499,20 +2149,22 @@
                             },
                             ".message": {
                                 "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
                                 "text": "Configuring now"
                             },
-                            ".outPorts>.port-out-1": {
+                            ".outPorts>.port-out": {
                                 "ref": ".background",
                                 "ref-x": 0.5
                             },
-                            ".outPorts>.port-out-1>.port-body": {
+                            ".outPorts>.port-out>.port-body": {
                                 "port": {
-                                    "id": "out-1",
+                                    "id": "out",
                                     "type": "out"
                                 }
                             },
                             ".title": {
-                                "text": "format"
+                                "text": "API"
                             },
                             "g.code image": {
                                 "opacity": 1
@@ -2533,81 +2185,51 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Add_Note_Format(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Add_Note_Format() called')\n    \n    template = \"\"\"**GUIDE** : Check for detected software updates.\n\n|nt_host|asset_name|version|version_cnt|asset_vendor|asset_type|asset_model|priority|\n|--|--|--|--|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|\n%%\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Check_Software_Updates:action_result.data.*.nt_host\",\n        \"Check_Software_Updates:action_result.data.*.asset_name\",\n        \"Check_Software_Updates:action_result.data.*.version\",\n        \"Check_Software_Updates:action_result.data.*.version_cnt\",\n        \"Check_Software_Updates:action_result.data.*.asset_vendor\",\n        \"Check_Software_Updates:action_result.data.*.asset_type\",\n        \"Check_Software_Updates:action_result.data.*.asset_model\",\n        \"Check_Software_Updates:action_result.data.*.priority\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Add_Note_Format\")\n\n    add_note_3(container=container)\n\n    return",
+                        "block_code": "def Pin_Check_Software_Sandbox_Status(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Pin_Check_Software_Sandbox_Status() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Software_Sandbox_Status')\n\n    phantom.pin(container=container, data=formatted_data_1, message=\"Check Software Sandbox Status\", name=\"Check Software Sandbox Status\")\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
+                        "color": "",
+                        "configured": [
+                            {
+                                "key": "pin",
+                                "pinData": "Format_Pin_Software_Sandbox_Status:formatted_data",
+                                "pinMessage": "Check Software Sandbox Status",
+                                "pinName": "Check Software Sandbox Status",
+                                "pinPinColor": "red",
+                                "pinPinColor_display": "Red",
+                                "pinPinType": "data",
+                                "pinPinType_display": "data"
+                            }
+                        ],
                         "connected_to_start": true,
-                        "connection_name": "Check Software Updates",
+                        "connection_name": "Check Software Sandbox Status",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Add Note Format",
+                        "custom_name": "Pin Check Software Sandbox Status",
                         "description": "",
-                        "format": "format",
                         "has_custom": false,
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "15c37d23-a609-453a-866f-d475b8bf9ff0",
+                        "id": "a3c5dfbe-5e16-4d1f-a039-c564e701f3c5",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 146,
-                        "line_start": 117,
+                        "line_end": 114,
+                        "line_start": 105,
                         "message": "Configuring now",
-                        "name": "format",
+                        "name": "pin",
                         "notes": "",
-                        "number": 3,
-                        "order": 7,
+                        "number": 1,
+                        "order": 6,
                         "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.nt_host"
-                            },
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.asset_name"
-                            },
-                            {
-                                "position": 2,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.version"
-                            },
-                            {
-                                "position": 3,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.version_cnt"
-                            },
-                            {
-                                "position": 4,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.asset_vendor"
-                            },
-                            {
-                                "position": 5,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.asset_type"
-                            },
-                            {
-                                "position": 6,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.asset_model"
-                            },
-                            {
-                                "position": 7,
-                                "type": "",
-                                "value": "Check_Software_Updates:action_result.data.*.priority"
-                            }
+                            "out"
                         ],
                         "ports": {
                             "groups": {
@@ -2662,23 +2284,22 @@
                             }
                         },
                         "position": {
-                            "x": 960,
-                            "y": -60
+                            "x": 1220,
+                            "y": 80
                         },
                         "previous_function": "",
-                        "previous_name": "Add_Note_Format",
-                        "show_number": true,
+                        "previous_name": "Pin_Check_Software_Sandbox_Status",
+                        "show_number": false,
                         "size": {
                             "height": 100,
                             "width": 180
                         },
-                        "state": "format",
+                        "state": "api",
                         "status": "",
-                        "template": "**GUIDE** : Check for detected software updates.\n\n|nt_host|asset_name|version|version_cnt|asset_vendor|asset_type|asset_model|priority|\n|--|--|--|--|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|\n%%",
-                        "title": "format",
-                        "type": "coa.Format",
+                        "title": "API",
+                        "type": "coa.API",
                         "warn": false,
-                        "z": 153
+                        "z": 241
                     },
                     {
                         "active": false,
@@ -2743,7 +2364,7 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def add_note_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('add_note_3() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Add_Note_Format')\n\n    note_title = \"Manage software updates and vulnerabilities on the operational assets, and manage exceptions.\"\n    note_content = formatted_data_1\n    note_format = \"markdown\"\n    phantom.add_note(container=container, note_type=\"general\", title=note_title, content=note_content, note_format=note_format)\n\n    return",
+                        "block_code": "def add_note_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('add_note_3() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Add_Note_Format')\n\n    note_title = \"Check Software Sandbox Status\"\n    note_content = formatted_data_1\n    note_format = \"markdown\"\n    phantom.add_note(container=container, note_type=\"general\", title=note_title, content=note_content, note_format=note_format)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
@@ -2753,12 +2374,12 @@
                                 "addNoteContent": "Add_Note_Format:formatted_data",
                                 "addNoteNoteFormat": "markdown",
                                 "addNoteNoteFormat_display": "markdown",
-                                "addNoteTitle": "Manage software updates and vulnerabilities on the operational assets, and manage exceptions.",
+                                "addNoteTitle": "Check Software Sandbox Status",
                                 "key": "add-note"
                             }
                         ],
                         "connected_to_start": true,
-                        "connection_name": "Check Software Updates",
+                        "connection_name": "Check Software Sandbox Status",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
@@ -2776,8 +2397,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 158,
-                        "line_start": 146,
+                        "line_end": 149,
+                        "line_start": 137,
                         "message": "Configuring now",
                         "name": "add note",
                         "notes": "",
@@ -2854,17 +2475,381 @@
                         "title": "API",
                         "type": "coa.API",
                         "warn": false,
-                        "z": 154
+                        "z": 242
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
+                            },
+                            ".color-band": {
+                                "fill": "#3C444D"
+                            },
+                            ".format": {
+                                "text": "Format Software Sandbo..."
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def Format_Software_Sandbox_Status(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Software_Sandbox_Status() called')\n    \n    template = \"\"\"| otsec_action_check_software_sandbox_status(\\\"{0}\\\")\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Search_OT_Asset:action_result.data.*.ip\",\n        \"artifact:*.cef.dvc\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Software_Sandbox_Status\")\n\n    Check_Software_Sandbox_Status(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "Search OT Asset",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "Format Software Sandbox Status",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "8dd09743-0448-431e-a0d6-278974f6c06a",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 32,
+                        "line_start": 15,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "",
+                        "number": 1,
+                        "order": 2,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "Search_OT_Asset:action_result.data.*.ip"
+                            },
+                            {
+                                "position": 2,
+                                "type": "",
+                                "value": "artifact:*.cef.dvc"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 280,
+                            "y": 80
+                        },
+                        "previous_function": "",
+                        "previous_name": "Format_Software_Sandbox_Status",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "| otsec_action_check_software_sandbox_status(\"{0}\")",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 243
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
+                            },
+                            ".color-band": {
+                                "fill": "#3C444D"
+                            },
+                            ".format": {
+                                "text": "Add Note Format"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def Add_Note_Format(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Add_Note_Format() called')\n    \n    template = \"\"\"|_time|dvc|wsd_status|wsd_user|\n|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|\n%%\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Check_Software_Sandbox_Status:action_result.data.*._time\",\n        \"Check_Software_Sandbox_Status:action_result.data.*.dvc\",\n        \"Check_Software_Sandbox_Status:action_result.data.*.wsd_status\",\n        \"Check_Software_Sandbox_Status:action_result.data.*.wsd_user\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Add_Note_Format\")\n\n    add_note_3(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "Check Software Sandbox Status",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "Add Note Format",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "15c37d23-a609-453a-866f-d475b8bf9ff0",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 137,
+                        "line_start": 114,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "",
+                        "number": 3,
+                        "order": 7,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "Check_Software_Sandbox_Status:action_result.data.*._time"
+                            },
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "Check_Software_Sandbox_Status:action_result.data.*.dvc"
+                            },
+                            {
+                                "position": 2,
+                                "type": "",
+                                "value": "Check_Software_Sandbox_Status:action_result.data.*.wsd_status"
+                            },
+                            {
+                                "position": 3,
+                                "type": "",
+                                "value": "Check_Software_Sandbox_Status:action_result.data.*.wsd_user"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 960,
+                            "y": -60
+                        },
+                        "previous_function": "",
+                        "previous_name": "Add_Note_Format",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "|_time|dvc|wsd_status|wsd_user|\n|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|\n%%",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 244
                     }
                 ]
             },
             "notes": ""
         },
-        "python_version": "3",
+        "python_version": "2.7",
         "schema": 4,
         "version": "4.9.34514"
     },
-    "create_time": "2021-07-15T15:53:25.316291+00:00",
+    "create_time": "2021-06-10T22:12:12.275056+00:00",
     "draft_mode": false,
     "labels": [
         "*"
