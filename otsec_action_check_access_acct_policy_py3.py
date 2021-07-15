@@ -1,4 +1,5 @@
 """
+Run two Splunk searches to perform an asset lookup and check for authentication failures against the identified asset, then post that information to the event.
 """
 
 import phantom.rules as phantom
@@ -12,40 +13,41 @@ def on_start(container):
 
     return
 
-def Format_Software_Vuln_Bulletin(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug('Format_Software_Vuln_Bulletin() called')
+def Format_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('Format_Access_Policy_Violations() called')
     
-    template = """`get_ot_assets_sw`
-| search nt_host=\"{0}\" | eval cve=mvdedup(cve)
-| rex field=asset_name mode=sed \"s/\\d+\\.[\\d\\.]+//g\"
-| stats values(version) as version, dc(version) as version_cnt, last(asset_vendor) as asset_vendor, last(asset_type) as asset_type, last(asset_model) as asset_model, last(priority) as priority by nt_host, asset_name
-| search version_cnt>1"""
+    template = """tag=authentication dvc_asset_type=*  dvc=\"{1}\" user=\"*\" NOT 1.1.1.1 action=fail* earliest=-1d latest=now
+| strcat dvc_zone src_zone dest_zone asset_zone
+| rex field=asset_zone \"level[_]*(?<asset_zone>\\d+)\"
+| rex field=asset_zone mode=sed \"s/level[_]*/level /g\"
+| stats values(dvc_asset_type) as asset_type, values(dvc_asset_model) as asset_model, values(dvc_asset_status) as asset_status, values(dvc_priority) as priority, values(asset_zone) as asset_zone, values(dvc_asset_system) as asset_system, values(dvc_location) as location, values(user) as user, count by dvc"""
 
     # parameter list for template variable replacement
     parameters = [
+        "Search_OT_Asset:action_result.data.*.ip",
         "artifact:*.cef.dvc",
     ]
 
-    phantom.format(container=container, template=template, parameters=parameters, name="Format_Software_Vuln_Bulletin")
+    phantom.format(container=container, template=template, parameters=parameters, name="Format_Access_Policy_Violations")
 
-    Check_Software_Vuln_Bulletin(container=container)
+    Check_Access_Policy_Violations(container=container)
 
     return
 
 """
 Search for Access priv logins to the asset
 """
-def Check_Software_Vuln_Bulletin(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug('Check_Software_Vuln_Bulletin() called')
+def Check_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('Check_Access_Policy_Violations() called')
         
     #phantom.debug('Action: {0} {1}'.format(action['name'], ('SUCCEEDED' if success else 'FAILED')))
     
-    # collect data for 'Check_Software_Vuln_Bulletin' call
-    formatted_data_1 = phantom.get_format_data(name='Format_Software_Vuln_Bulletin')
+    # collect data for 'Check_Access_Policy_Violations' call
+    formatted_data_1 = phantom.get_format_data(name='Format_Access_Policy_Violations')
 
     parameters = []
     
-    # build parameters list for 'Check_Software_Vuln_Bulletin' call
+    # build parameters list for 'Check_Access_Policy_Violations' call
     parameters.append({
         'query': formatted_data_1,
         'command': "",
@@ -53,7 +55,7 @@ def Check_Software_Vuln_Bulletin(action=None, success=None, container=None, resu
         'parse_only': "",
     })
 
-    phantom.act(action="run query", parameters=parameters, assets=['splunk es - ot sec'], callback=filter_1, name="Check_Software_Vuln_Bulletin")
+    phantom.act(action="run query", parameters=parameters, assets=['splunk es - ot sec'], callback=filter_1, name="Check_Access_Policy_Violations")
 
     return
 
@@ -65,13 +67,13 @@ def filter_1(action=None, success=None, container=None, results=None, handle=Non
         container=container,
         action_results=results,
         conditions=[
-            ["Check_Software_Vuln_Bulletin:action_result.summary.total_events", ">", 0],
+            ["Check_Access_Policy_Violations:action_result.summary.total_events", ">", 0],
         ],
         name="filter_1:condition_1")
 
     # call connected blocks if filtered artifacts or results
     if matched_artifacts_1 or matched_results_1:
-        Format_Pin_Format_Software_Vuln_Bulletin(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
+        Format_Pin_Access_Policy_Violations(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
         Add_Note_Format(action=action, success=success, container=container, results=results, handle=handle, custom_function=custom_function, filtered_artifacts=matched_artifacts_1, filtered_results=matched_results_1)
 
     # collect filtered artifact ids for 'if' condition 2
@@ -79,7 +81,7 @@ def filter_1(action=None, success=None, container=None, results=None, handle=Non
         container=container,
         action_results=results,
         conditions=[
-            ["Check_Software_Vuln_Bulletin:action_result.summary.total_events", "==", 0],
+            ["Check_Access_Policy_Violations:action_result.summary.total_events", "==", 0],
         ],
         name="filter_1:condition_2")
 
@@ -89,39 +91,52 @@ def filter_1(action=None, success=None, container=None, results=None, handle=Non
 
     return
 
-def Format_Pin_Format_Software_Vuln_Bulletin(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug('Format_Pin_Format_Software_Vuln_Bulletin() called')
+def Format_Pin_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('Format_Pin_Access_Policy_Violations() called')
     
     template = """Total {0} Records Detected for Review"""
 
     # parameter list for template variable replacement
     parameters = [
-        "filtered-data:filter_1:condition_1:Check_Software_Vuln_Bulletin:action_result.summary.total_events",
+        "filtered-data:filter_1:condition_1:Check_Access_Policy_Violations:action_result.summary.total_events",
     ]
 
-    phantom.format(container=container, template=template, parameters=parameters, name="Format_Pin_Format_Software_Vuln_Bulletin")
+    phantom.format(container=container, template=template, parameters=parameters, name="Format_Pin_Access_Policy_Violations")
 
-    Pin_Check_Software_Vuln_Bulletin(container=container)
+    Pin_Check_Access_Policy_Violations(container=container)
 
     return
 
-def Pin_Check_Software_Vuln_Bulletin(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
-    phantom.debug('Pin_Check_Software_Vuln_Bulletin() called')
+def Pin_Check_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
+    phantom.debug('Pin_Check_Access_Policy_Violations() called')
 
-    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Format_Software_Vuln_Bulletin')
+    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Access_Policy_Violations')
 
-    phantom.pin(container=container, data=formatted_data_1, message="Check for Software Vulnerability Bulletin", name="Check for Software Vulnerability Bulletin")
+    phantom.pin(container=container, data=formatted_data_1, message="Check Access Policy Violations", name="Check Network VPN Activity")
 
     return
 
 def Add_Note_Format(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):
     phantom.debug('Add_Note_Format() called')
     
-    template = """Check [OT software vulnerability bulletin dashboard](https://18.222.235.206:8000/en-US/app/SplunkEnterpriseSecuritySuite/OT_Asset_Vulnerability_Updates?form.INPUT_LEVEL=critical&form.INPUT_LEVEL=high&form.INPUT_LEVEL=medium&form.INPUT_VENDORS=Siemens*&form.INPUT_VENDORS=Rockwell*&form.INPUT_VENDORS=Schneider*&form.INPUT_VENDORS=ge*&form.INPUT_CVE=*&form.INPUT_TIME.earliest=0&form.INPUT_TIME.latest=&form.INPUT_VENDOR=*&form.INPUT_FIELD=asset_id&form.INPUT_SEARCH_PATT=*) for latest updated vulnerabilities."""
+    template = """|dvc|asset_type|asset_model|asset_status|priority|asset_zone|asset_system|location|user|count|
+|--|--|--|--|--|--|--|--|--|--|
+%%
+|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|
+%%"""
 
     # parameter list for template variable replacement
     parameters = [
-        "Check_Software_Vuln_Bulletin:action_result.data.*.nt_host",
+        "Check_Access_Policy_Violations:action_result.data.*.dvc",
+        "Check_Access_Policy_Violations:action_result.data.*.asset_type",
+        "Check_Access_Policy_Violations:action_result.data.*.asset_model",
+        "Check_Access_Policy_Violations:action_result.data.*.asset_status",
+        "Check_Access_Policy_Violations:action_result.data.*.priority",
+        "Check_Access_Policy_Violations:action_result.data.*.asset_zone",
+        "Check_Access_Policy_Violations:action_result.data.*.asset_system",
+        "Check_Access_Policy_Violations:action_result.data.*.location",
+        "Check_Access_Policy_Violations:action_result.data.*.user",
+        "Check_Access_Policy_Violations:action_result.data.*.count",
     ]
 
     phantom.format(container=container, template=template, parameters=parameters, name="Add_Note_Format")
@@ -135,7 +150,7 @@ def add_note_3(action=None, success=None, container=None, results=None, handle=N
 
     formatted_data_1 = phantom.get_format_data(name='Add_Note_Format')
 
-    note_title = "Check for Software Vulnerability Bulletin"
+    note_title = "Check Access Policy Violations"
     note_content = formatted_data_1
     note_format = "markdown"
     phantom.add_note(container=container, note_type="general", title=note_title, content=note_content, note_format=note_format)
@@ -179,7 +194,7 @@ def Search_OT_Asset(action=None, success=None, container=None, results=None, han
         'parse_only': "",
     })
 
-    phantom.act(action="run query", parameters=parameters, assets=['splunk es - ot sec'], callback=Format_Software_Vuln_Bulletin, name="Search_OT_Asset")
+    phantom.act(action="run query", parameters=parameters, assets=['splunk es - ot sec'], callback=Format_Access_Policy_Violations, name="Search_OT_Asset")
 
     return
 
