@@ -1,4 +1,5 @@
 """
+Run two Splunk searches to perform an asset lookup and check for authentication failures against the identified asset, then post that information to the event.
 """
 
 import phantom.rules as phantom

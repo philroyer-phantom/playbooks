@@ -6,7 +6,8 @@
         "data": {
             "clean": true,
             "code_block": "",
-            "description": "",
+            "description": "Run two Splunk searches to perform an asset lookup and check for authentication failures against the identified asset, then post that information to the event.",
+            "hash": "be4048f245fb09ae469f111d81aa2b2ebd06b14c",
             "joint": {
                 "cells": [
                     {
@@ -111,8 +112,8 @@
                         "join_code": "# read-only block view not available",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 213,
-                        "line_start": 200,
+                        "line_end": 214,
+                        "line_start": 201,
                         "name": "",
                         "notes": "",
                         "number": 0,
@@ -704,8 +705,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 93,
-                        "line_start": 61,
+                        "line_end": 94,
+                        "line_start": 62,
                         "name": "filter",
                         "notes": "",
                         "number": 1,
@@ -823,7 +824,7 @@
                                 "fill": "#3C444D"
                             },
                             ".format": {
-                                "text": "Format Access Policy Vi..."
+                                "text": "Format Pin Access Polic..."
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -871,50 +872,45 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Format_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Access_Policy_Violations() called')\n    \n    template = \"\"\"tag=authentication dvc_asset_type=*  dvc=\\\"{1}\\\" user=\\\"*\\\" NOT 1.1.1.1 action=fail* earliest=-1d latest=now\n| strcat dvc_zone src_zone dest_zone asset_zone\n| rex field=asset_zone \\\"level[_]*(?<asset_zone>\\\\d+)\\\"\n| rex field=asset_zone mode=sed \\\"s/level[_]*/level /g\\\"\n| stats values(dvc_asset_type) as asset_type, values(dvc_asset_model) as asset_model, values(dvc_asset_status) as asset_status, values(dvc_priority) as priority, values(asset_zone) as asset_zone, values(dvc_asset_system) as asset_system, values(dvc_location) as location, values(user) as user, count by dvc\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Search_OT_Asset:action_result.data.*.ip\",\n        \"artifact:*.cef.dvc\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Access_Policy_Violations\")\n\n    Check_Access_Policy_Violations(container=container)\n\n    return",
+                        "block_code": "def Format_Pin_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Pin_Access_Policy_Violations() called')\n    \n    template = \"\"\"Total {0} Records Detected for Review\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"filtered-data:filter_1:condition_1:Check_Access_Policy_Violations:action_result.summary.total_events\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Pin_Access_Policy_Violations\")\n\n    Pin_Check_Access_Policy_Violations(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Search OT Asset",
+                        "connection_name": "Check Access Policy Violations",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Format Access Policy Violations",
+                        "custom_name": "Format Pin Access Policy Violations",
                         "description": "",
                         "format": "format",
                         "has_custom": false,
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "8dd09743-0448-431e-a0d6-278974f6c06a",
+                        "id": "5b199e51-d88b-4e34-a748-90886b05e094",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 36,
-                        "line_start": 15,
+                        "line_end": 110,
+                        "line_start": 94,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
-                        "number": 1,
-                        "order": 2,
+                        "number": 2,
+                        "order": 5,
                         "outPorts": [
                             "out-1"
                         ],
                         "parameters": [
                             {
-                                "position": 1,
+                                "position": 0,
                                 "type": "",
-                                "value": "Search_OT_Asset:action_result.data.*.ip"
-                            },
-                            {
-                                "position": 2,
-                                "type": "",
-                                "value": "artifact:*.cef.dvc"
+                                "value": "filtered-data:filter_1:condition_1:Check_Access_Policy_Violations:action_result.summary.total_events"
                             }
                         ],
                         "ports": {
@@ -970,11 +966,11 @@
                             }
                         },
                         "position": {
-                            "x": 280,
+                            "x": 960,
                             "y": 80
                         },
                         "previous_function": "",
-                        "previous_name": "Format_Access_Policy_Violations",
+                        "previous_name": "Format_Pin_Access_Policy_Violations",
                         "show_number": true,
                         "size": {
                             "height": 100,
@@ -982,11 +978,727 @@
                         },
                         "state": "format",
                         "status": "",
-                        "template": "tag=authentication dvc_asset_type=*  dvc=\"{1}\" user=\"*\" NOT 1.1.1.1 action=fail* earliest=-1d latest=now\n| strcat dvc_zone src_zone dest_zone asset_zone\n| rex field=asset_zone \"level[_]*(?<asset_zone>\\d+)\"\n| rex field=asset_zone mode=sed \"s/level[_]*/level /g\"\n| stats values(dvc_asset_type) as asset_type, values(dvc_asset_model) as asset_model, values(dvc_asset_status) as asset_status, values(dvc_priority) as priority, values(asset_zone) as asset_zone, values(dvc_asset_system) as asset_system, values(dvc_location) as location, values(user) as user, count by dvc",
+                        "template": "Total {0} Records Detected for Review",
                         "title": "format",
                         "type": "coa.Format",
                         "warn": false,
-                        "z": 203
+                        "z": 205
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "api": "pin",
+                        "attrs": {
+                            ".api": {
+                                "text": "Pin Check Access Policy ..."
+                            },
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
+                            },
+                            ".color-band": {
+                                "fill": "#3C444D"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "API"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def Pin_Check_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Pin_Check_Access_Policy_Violations() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Access_Policy_Violations')\n\n    phantom.pin(container=container, data=formatted_data_1, message=\"Check Access Policy Violations\", name=\"Check Network VPN Activity\")\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "color": "",
+                        "configured": [
+                            {
+                                "key": "pin",
+                                "pinData": "Format_Pin_Access_Policy_Violations:formatted_data",
+                                "pinMessage": "Check Access Policy Violations",
+                                "pinName": "Check Network VPN Activity",
+                                "pinPinColor": "red",
+                                "pinPinColor_display": "Red",
+                                "pinPinType": "data",
+                                "pinPinType_display": "data"
+                            }
+                        ],
+                        "connected_to_start": true,
+                        "connection_name": "Check Access Policy Violations",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "Pin Check Access Policy Violations",
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "a3c5dfbe-5e16-4d1f-a039-c564e701f3c5",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 119,
+                        "line_start": 110,
+                        "message": "Configuring now",
+                        "name": "pin",
+                        "notes": "",
+                        "number": 1,
+                        "order": 6,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 1220,
+                            "y": 80
+                        },
+                        "previous_function": "",
+                        "previous_name": "Pin_Check_Access_Policy_Violations",
+                        "show_number": false,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "api",
+                        "status": "",
+                        "title": "API",
+                        "type": "coa.API",
+                        "warn": false,
+                        "z": 206
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "api": "add note",
+                        "attrs": {
+                            ".api": {
+                                "text": "add note"
+                            },
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
+                            },
+                            ".color-band": {
+                                "fill": "#3C444D"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "ref-x": 5,
+                                "ref-y": 105,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "API"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def add_note_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('add_note_3() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Add_Note_Format')\n\n    note_title = \"Check Access Policy Violations\"\n    note_content = formatted_data_1\n    note_format = \"markdown\"\n    phantom.add_note(container=container, note_type=\"general\", title=note_title, content=note_content, note_format=note_format)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "color": "",
+                        "configured": [
+                            {
+                                "addNoteContent": "Add_Note_Format:formatted_data",
+                                "addNoteNoteFormat": "markdown",
+                                "addNoteNoteFormat_display": "markdown",
+                                "addNoteTitle": "Check Access Policy Violations",
+                                "key": "add-note"
+                            }
+                        ],
+                        "connected_to_start": true,
+                        "connection_name": "Check Access Policy Violations",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "499093a6-973b-436e-a9ab-3fa983fa6f1c",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 160,
+                        "line_start": 148,
+                        "message": "Configuring now",
+                        "name": "add note",
+                        "notes": "",
+                        "number": 3,
+                        "order": 8,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 1220,
+                            "y": -60
+                        },
+                        "previous_function": "",
+                        "previous_name": "add_note_3",
+                        "show_number": false,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "api",
+                        "status": "",
+                        "title": "API",
+                        "type": "coa.API",
+                        "warn": false,
+                        "z": 207
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
+                            },
+                            ".color-band": {
+                                "fill": "#3C444D"
+                            },
+                            ".format": {
+                                "text": "Add Note Format"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1
+                            }
+                        },
+                        "block_code": "def Add_Note_Format(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Add_Note_Format() called')\n    \n    template = \"\"\"|dvc|asset_type|asset_model|asset_status|priority|asset_zone|asset_system|location|user|count|\n|--|--|--|--|--|--|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|\n%%\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Check_Access_Policy_Violations:action_result.data.*.dvc\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_type\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_model\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_status\",\n        \"Check_Access_Policy_Violations:action_result.data.*.priority\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_zone\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_system\",\n        \"Check_Access_Policy_Violations:action_result.data.*.location\",\n        \"Check_Access_Policy_Violations:action_result.data.*.user\",\n        \"Check_Access_Policy_Violations:action_result.data.*.count\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Add_Note_Format\")\n\n    add_note_3(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "Check Access Policy Violations",
+                        "connection_type": "action",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "Add Note Format",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "15c37d23-a609-453a-866f-d475b8bf9ff0",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 148,
+                        "line_start": 119,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "",
+                        "number": 3,
+                        "order": 7,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.dvc"
+                            },
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_type"
+                            },
+                            {
+                                "position": 2,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_model"
+                            },
+                            {
+                                "position": 3,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_status"
+                            },
+                            {
+                                "position": 4,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.priority"
+                            },
+                            {
+                                "position": 5,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_zone"
+                            },
+                            {
+                                "position": 6,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_system"
+                            },
+                            {
+                                "position": 7,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.location"
+                            },
+                            {
+                                "position": 8,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.user"
+                            },
+                            {
+                                "position": 9,
+                                "type": "",
+                                "value": "Check_Access_Policy_Violations:action_result.data.*.count"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 960,
+                            "y": -60
+                        },
+                        "previous_function": "",
+                        "previous_name": "Add_Note_Format",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "|dvc|asset_type|asset_model|asset_status|priority|asset_zone|asset_system|location|user|count|\n|--|--|--|--|--|--|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|\n%%",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 208
+                    },
+                    {
+                        "0": "S",
+                        "1": "T",
+                        "2": "A",
+                        "3": "R",
+                        "4": "T",
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
+                            },
+                            ".color-band": {
+                                "fill": "#3C444D"
+                            },
+                            ".outPorts>.port-out": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out>.port-body": {
+                                "port": {
+                                    "id": "out",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "ref-x": 33,
+                                "ref-y": 8,
+                                "text": "START"
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.icon image": {
+                                "ref-x": 13,
+                                "xlink:href": "/inc/coa/img/block_icon_start.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            }
+                        },
+                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'Format_Asset_Lookup' block\n    Format_Asset_Lookup(container=container)\n\n    return",
+                        "callback_code": "# read-only block view not available",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "",
+                        "connection_type": "",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "",
+                        "description": "",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "db2851c8-800e-4f42-b23d-50786591c9e9",
+                        "inPorts": [],
+                        "join_code": "# read-only block view not available",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 16,
+                        "line_start": 8,
+                        "name": "",
+                        "notes": "",
+                        "number": 0,
+                        "order": 1,
+                        "outPorts": [
+                            "out"
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": -400,
+                            "y": 100
+                        },
+                        "previous_function": "",
+                        "previous_name": "",
+                        "show_number": true,
+                        "size": {
+                            "height": 54,
+                            "width": 80
+                        },
+                        "status": "",
+                        "title": "START",
+                        "type": "coa.StartEnd",
+                        "warn": false,
+                        "z": 214
                     },
                     {
                         "action": "run query",
@@ -1315,8 +2027,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 61,
-                        "line_start": 39,
+                        "line_end": 62,
+                        "line_start": 40,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -1397,7 +2109,7 @@
                         "title": "Investigate",
                         "type": "coa.Action",
                         "warn": false,
-                        "z": 204
+                        "z": 219
                     },
                     {
                         "active": false,
@@ -1411,7 +2123,7 @@
                                 "fill": "#3C444D"
                             },
                             ".format": {
-                                "text": "Format Pin Access Polic..."
+                                "text": "Format Access Policy Vi..."
                             },
                             ".inPorts>.port-in": {
                                 "ref": ".background",
@@ -1459,37 +2171,215 @@
                                 "opacity": 1
                             }
                         },
-                        "block_code": "def Format_Pin_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Pin_Access_Policy_Violations() called')\n    \n    template = \"\"\"Total {0} Records Detected for Review\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"filtered-data:filter_1:condition_1:Check_Access_Policy_Violations:action_result.summary.total_events\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Pin_Access_Policy_Violations\")\n\n    Pin_Check_Access_Policy_Violations(container=container)\n\n    return",
+                        "block_code": "def Format_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Access_Policy_Violations() called')\n    \n    template = \"\"\"tag=authentication dvc_asset_type=*  dvc=\\\"{1}\\\" user=\\\"*\\\" NOT 1.1.1.1 action=fail* earliest=-1d latest=now\n| strcat dvc_zone src_zone dest_zone asset_zone\n| rex field=asset_zone \\\"level[_]*(?<asset_zone>\\\\d+)\\\"\n| rex field=asset_zone mode=sed \\\"s/level[_]*/level /g\\\"\n| stats values(dvc_asset_type) as asset_type, values(dvc_asset_model) as asset_model, values(dvc_asset_status) as asset_status, values(dvc_priority) as priority, values(asset_zone) as asset_zone, values(dvc_asset_system) as asset_system, values(dvc_location) as location, values(user) as user, count by dvc\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Search_OT_Asset:action_result.data.*.ip\",\n        \"artifact:*.cef.dvc\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Access_Policy_Violations\")\n\n    Check_Access_Policy_Violations(container=container)\n\n    return",
                         "callback_code": "",
                         "callback_start": 1,
                         "callsback": false,
                         "connected_to_start": true,
-                        "connection_name": "Check Access Policy Violations",
+                        "connection_name": "Search OT Asset",
                         "connection_type": "action",
                         "custom_callback": "",
                         "custom_code": "",
                         "custom_join": "",
-                        "custom_name": "Format Pin Access Policy Violations",
+                        "custom_name": "Format Access Policy Violations",
                         "description": "",
                         "format": "format",
                         "has_custom": false,
                         "has_custom_block": false,
                         "has_custom_callback": false,
                         "has_custom_join": false,
-                        "id": "5b199e51-d88b-4e34-a748-90886b05e094",
+                        "id": "8dd09743-0448-431e-a0d6-278974f6c06a",
                         "inPorts": [
                             "in"
                         ],
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 109,
-                        "line_start": 93,
+                        "line_end": 37,
+                        "line_start": 16,
                         "message": "Configuring now",
                         "name": "format",
                         "notes": "",
-                        "number": 2,
-                        "order": 5,
+                        "number": 1,
+                        "order": 2,
+                        "outPorts": [
+                            "out-1"
+                        ],
+                        "parameters": [
+                            {
+                                "position": 1,
+                                "type": "",
+                                "value": "Search_OT_Asset:action_result.data.*.ip"
+                            },
+                            {
+                                "position": 2,
+                                "type": "",
+                                "value": "artifact:*.cef.dvc"
+                            }
+                        ],
+                        "ports": {
+                            "groups": {
+                                "in": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "left"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "left"
+                                    }
+                                },
+                                "out": {
+                                    "attrs": {
+                                        ".port-body": {
+                                            "fill": "#fff",
+                                            "magnet": true,
+                                            "r": 10,
+                                            "stroke": "#000"
+                                        },
+                                        ".port-label": {
+                                            "fill": "#000"
+                                        }
+                                    },
+                                    "label": {
+                                        "position": {
+                                            "args": {
+                                                "y": 10
+                                            },
+                                            "name": "right"
+                                        }
+                                    },
+                                    "position": {
+                                        "name": "right"
+                                    }
+                                }
+                            }
+                        },
+                        "position": {
+                            "x": 280,
+                            "y": 80
+                        },
+                        "previous_function": "",
+                        "previous_name": "Format_Access_Policy_Violations",
+                        "show_number": true,
+                        "size": {
+                            "height": 100,
+                            "width": 180
+                        },
+                        "state": "format",
+                        "status": "",
+                        "template": "tag=authentication dvc_asset_type=*  dvc=\"{1}\" user=\"*\" NOT 1.1.1.1 action=fail* earliest=-1d latest=now\n| strcat dvc_zone src_zone dest_zone asset_zone\n| rex field=asset_zone \"level[_]*(?<asset_zone>\\d+)\"\n| rex field=asset_zone mode=sed \"s/level[_]*/level /g\"\n| stats values(dvc_asset_type) as asset_type, values(dvc_asset_model) as asset_model, values(dvc_asset_status) as asset_status, values(dvc_priority) as priority, values(asset_zone) as asset_zone, values(dvc_asset_system) as asset_system, values(dvc_location) as location, values(user) as user, count by dvc",
+                        "title": "format",
+                        "type": "coa.Format",
+                        "warn": false,
+                        "z": 222
+                    },
+                    {
+                        "active": false,
+                        "angle": 0,
+                        "attrs": {
+                            ".background": {
+                                "fill": "#000000",
+                                "stroke": "#5C6773"
+                            },
+                            ".color-band": {
+                                "fill": "#3C444D"
+                            },
+                            ".format": {
+                                "text": "Format Asset Lookup"
+                            },
+                            ".inPorts>.port-in": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".inPorts>.port-in>.port-body": {
+                                "port": {
+                                    "id": "in",
+                                    "type": "in"
+                                }
+                            },
+                            ".message": {
+                                "opacity": 0,
+                                "text": "Configuring now"
+                            },
+                            ".outPorts>.port-out-1": {
+                                "ref": ".background",
+                                "ref-x": 0.5
+                            },
+                            ".outPorts>.port-out-1>.port-body": {
+                                "port": {
+                                    "id": "out-1",
+                                    "type": "out"
+                                }
+                            },
+                            ".title": {
+                                "text": "format"
+                            },
+                            "g.code image": {
+                                "opacity": 1
+                            },
+                            "g.delete": {
+                                "display": "none"
+                            },
+                            "g.error": {
+                                "opacity": 0
+                            },
+                            "g.error image": {
+                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
+                            },
+                            "g.notes": {
+                                "display": "block"
+                            },
+                            "g.notes image": {
+                                "opacity": 1,
+                                "xlink:href": "/inc/coa/img/block_icon_note_dark_on.svg"
+                            }
+                        },
+                        "block_code": "def Format_Asset_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Asset_Lookup() called')\n    \n    template = \"\"\"| `reverse_asset_lookup(\\\"{0}\\\")`\n| strcat asset_vendor \\\" : \\\" asset_model asset_vendor_model\n| rex field=zone \\\"level[_]*(?<zone_no>\\\\d+)\\\"\n| mvexpand zone_no\n| table asset asset_id asset_vendor_model asset_model asset_status asset_system asset_tag asset_type asset_vendor asset_version bunit category city classification country description dns exposure ip location mac nt_host owner pci_domain priority requires_av should_timesync should_update site_id vlan zone zone_no\n| rex field=ip \\\"^(?P<net_local>\\\\d+\\\\.\\\\d+)\\\"\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"artifact:*.cef.dvc\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Asset_Lookup\")\n\n    Search_OT_Asset(container=container)\n\n    return",
+                        "callback_code": "",
+                        "callback_start": 1,
+                        "callsback": false,
+                        "connected_to_start": true,
+                        "connection_name": "",
+                        "connection_type": "",
+                        "custom_callback": "",
+                        "custom_code": "",
+                        "custom_join": "",
+                        "custom_name": "Format Asset Lookup",
+                        "description": "",
+                        "format": "format",
+                        "has_custom": false,
+                        "has_custom_block": false,
+                        "has_custom_callback": false,
+                        "has_custom_join": false,
+                        "id": "395937d1-f181-4733-a787-89528b6f3559",
+                        "inPorts": [
+                            "in"
+                        ],
+                        "join_code": "",
+                        "join_optional": [],
+                        "join_start": 1,
+                        "line_end": 181,
+                        "line_start": 160,
+                        "message": "Configuring now",
+                        "name": "format",
+                        "notes": "otsec_action_check_access_acct_policy",
+                        "number": 4,
+                        "order": 9,
                         "outPorts": [
                             "out-1"
                         ],
@@ -1497,7 +2387,7 @@
                             {
                                 "position": 0,
                                 "type": "",
-                                "value": "filtered-data:filter_1:condition_1:Check_Access_Policy_Violations:action_result.summary.total_events"
+                                "value": "artifact:*.cef.dvc"
                             }
                         ],
                         "ports": {
@@ -1553,11 +2443,11 @@
                             }
                         },
                         "position": {
-                            "x": 960,
+                            "x": -260,
                             "y": 80
                         },
                         "previous_function": "",
-                        "previous_name": "Format_Pin_Access_Policy_Violations",
+                        "previous_name": "Format_Asset_Lookup",
                         "show_number": true,
                         "size": {
                             "height": 100,
@@ -1565,583 +2455,11 @@
                         },
                         "state": "format",
                         "status": "",
-                        "template": "Total {0} Records Detected for Review",
+                        "template": "| `reverse_asset_lookup(\"{0}\")`\n| strcat asset_vendor \" : \" asset_model asset_vendor_model\n| rex field=zone \"level[_]*(?<zone_no>\\d+)\"\n| mvexpand zone_no\n| table asset asset_id asset_vendor_model asset_model asset_status asset_system asset_tag asset_type asset_vendor asset_version bunit category city classification country description dns exposure ip location mac nt_host owner pci_domain priority requires_av should_timesync should_update site_id vlan zone zone_no\n| rex field=ip \"^(?P<net_local>\\d+\\.\\d+)\"",
                         "title": "format",
                         "type": "coa.Format",
                         "warn": false,
-                        "z": 205
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "api": "pin",
-                        "attrs": {
-                            ".api": {
-                                "text": "Pin Check Access Policy ..."
-                            },
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "API"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def Pin_Check_Access_Policy_Violations(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Pin_Check_Access_Policy_Violations() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Format_Pin_Access_Policy_Violations')\n\n    phantom.pin(container=container, data=formatted_data_1, message=\"Check Access Policy Violations\", name=\"Check Network VPN Activity\")\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "color": "",
-                        "configured": [
-                            {
-                                "key": "pin",
-                                "pinData": "Format_Pin_Access_Policy_Violations:formatted_data",
-                                "pinMessage": "Check Access Policy Violations",
-                                "pinName": "Check Network VPN Activity",
-                                "pinPinColor": "red",
-                                "pinPinColor_display": "Red",
-                                "pinPinType": "data",
-                                "pinPinType_display": "data"
-                            }
-                        ],
-                        "connected_to_start": true,
-                        "connection_name": "Check Access Policy Violations",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Pin Check Access Policy Violations",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "a3c5dfbe-5e16-4d1f-a039-c564e701f3c5",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 118,
-                        "line_start": 109,
-                        "message": "Configuring now",
-                        "name": "pin",
-                        "notes": "",
-                        "number": 1,
-                        "order": 6,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1220,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "Pin_Check_Access_Policy_Violations",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "api",
-                        "status": "",
-                        "title": "API",
-                        "type": "coa.API",
-                        "warn": false,
-                        "z": 206
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "api": "add note",
-                        "attrs": {
-                            ".api": {
-                                "text": "add note"
-                            },
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "ref-x": 5,
-                                "ref-y": 105,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "API"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def add_note_3(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('add_note_3() called')\n\n    formatted_data_1 = phantom.get_format_data(name='Add_Note_Format')\n\n    note_title = \"Check Access Policy Violations\"\n    note_content = formatted_data_1\n    note_format = \"markdown\"\n    phantom.add_note(container=container, note_type=\"general\", title=note_title, content=note_content, note_format=note_format)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "color": "",
-                        "configured": [
-                            {
-                                "addNoteContent": "Add_Note_Format:formatted_data",
-                                "addNoteNoteFormat": "markdown",
-                                "addNoteNoteFormat_display": "markdown",
-                                "addNoteTitle": "Check Access Policy Violations",
-                                "key": "add-note"
-                            }
-                        ],
-                        "connected_to_start": true,
-                        "connection_name": "Check Access Policy Violations",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "499093a6-973b-436e-a9ab-3fa983fa6f1c",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 159,
-                        "line_start": 147,
-                        "message": "Configuring now",
-                        "name": "add note",
-                        "notes": "",
-                        "number": 3,
-                        "order": 8,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 1220,
-                            "y": -60
-                        },
-                        "previous_function": "",
-                        "previous_name": "add_note_3",
-                        "show_number": false,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "api",
-                        "status": "",
-                        "title": "API",
-                        "type": "coa.API",
-                        "warn": false,
-                        "z": 207
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".format": {
-                                "text": "Add Note Format"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1
-                            }
-                        },
-                        "block_code": "def Add_Note_Format(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Add_Note_Format() called')\n    \n    template = \"\"\"|dvc|asset_type|asset_model|asset_status|priority|asset_zone|asset_system|location|user|count|\n|--|--|--|--|--|--|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|\n%%\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"Check_Access_Policy_Violations:action_result.data.*.dvc\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_type\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_model\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_status\",\n        \"Check_Access_Policy_Violations:action_result.data.*.priority\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_zone\",\n        \"Check_Access_Policy_Violations:action_result.data.*.asset_system\",\n        \"Check_Access_Policy_Violations:action_result.data.*.location\",\n        \"Check_Access_Policy_Violations:action_result.data.*.user\",\n        \"Check_Access_Policy_Violations:action_result.data.*.count\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Add_Note_Format\")\n\n    add_note_3(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "Check Access Policy Violations",
-                        "connection_type": "action",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Add Note Format",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "15c37d23-a609-453a-866f-d475b8bf9ff0",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 147,
-                        "line_start": 118,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "",
-                        "number": 3,
-                        "order": 7,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.dvc"
-                            },
-                            {
-                                "position": 1,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_type"
-                            },
-                            {
-                                "position": 2,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_model"
-                            },
-                            {
-                                "position": 3,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_status"
-                            },
-                            {
-                                "position": 4,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.priority"
-                            },
-                            {
-                                "position": 5,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_zone"
-                            },
-                            {
-                                "position": 6,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.asset_system"
-                            },
-                            {
-                                "position": 7,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.location"
-                            },
-                            {
-                                "position": 8,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.user"
-                            },
-                            {
-                                "position": 9,
-                                "type": "",
-                                "value": "Check_Access_Policy_Violations:action_result.data.*.count"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": 960,
-                            "y": -60
-                        },
-                        "previous_function": "",
-                        "previous_name": "Add_Note_Format",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "|dvc|asset_type|asset_model|asset_status|priority|asset_zone|asset_system|location|user|count|\n|--|--|--|--|--|--|--|--|--|--|\n%%\n|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|\n%%",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 208
+                        "z": 223
                     },
                     {
                         "action": "run query",
@@ -2470,8 +2788,8 @@
                         "join_code": "",
                         "join_optional": [],
                         "join_start": 1,
-                        "line_end": 200,
-                        "line_start": 180,
+                        "line_end": 201,
+                        "line_start": 181,
                         "message": "Configuring now",
                         "name": "run query",
                         "notes": "",
@@ -2552,334 +2870,17 @@
                         "title": "Investigate",
                         "type": "coa.Action",
                         "warn": false,
-                        "z": 212
-                    },
-                    {
-                        "0": "S",
-                        "1": "T",
-                        "2": "A",
-                        "3": "R",
-                        "4": "T",
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".outPorts>.port-out": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out>.port-body": {
-                                "port": {
-                                    "id": "out",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "ref-x": 33,
-                                "ref-y": 8,
-                                "text": "START"
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.icon image": {
-                                "ref-x": 13,
-                                "xlink:href": "/inc/coa/img/block_icon_start.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            }
-                        },
-                        "block_code": "def on_start(container):\n    phantom.debug('on_start() called')\n    \n    # call 'Format_Asset_Lookup' block\n    Format_Asset_Lookup(container=container)\n\n    return",
-                        "callback_code": "# read-only block view not available",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "",
-                        "description": "",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "db2851c8-800e-4f42-b23d-50786591c9e9",
-                        "inPorts": [],
-                        "join_code": "# read-only block view not available",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 15,
-                        "line_start": 7,
-                        "name": "",
-                        "notes": "",
-                        "number": 0,
-                        "order": 1,
-                        "outPorts": [
-                            "out"
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": -400,
-                            "y": 100
-                        },
-                        "previous_function": "",
-                        "previous_name": "",
-                        "show_number": true,
-                        "size": {
-                            "height": 54,
-                            "width": 80
-                        },
-                        "status": "",
-                        "title": "START",
-                        "type": "coa.StartEnd",
-                        "warn": false,
-                        "z": 214
-                    },
-                    {
-                        "active": false,
-                        "angle": 0,
-                        "attrs": {
-                            ".background": {
-                                "fill": "#000000",
-                                "stroke": "#5C6773"
-                            },
-                            ".color-band": {
-                                "fill": "#3C444D"
-                            },
-                            ".format": {
-                                "text": "Format Asset Lookup"
-                            },
-                            ".inPorts>.port-in": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".inPorts>.port-in>.port-body": {
-                                "port": {
-                                    "id": "in",
-                                    "type": "in"
-                                }
-                            },
-                            ".message": {
-                                "opacity": 0,
-                                "text": "Configuring now"
-                            },
-                            ".outPorts>.port-out-1": {
-                                "ref": ".background",
-                                "ref-x": 0.5
-                            },
-                            ".outPorts>.port-out-1>.port-body": {
-                                "port": {
-                                    "id": "out-1",
-                                    "type": "out"
-                                }
-                            },
-                            ".title": {
-                                "text": "format"
-                            },
-                            "g.code image": {
-                                "opacity": 1
-                            },
-                            "g.delete": {
-                                "display": "none"
-                            },
-                            "g.error": {
-                                "opacity": 0
-                            },
-                            "g.error image": {
-                                "xlink:href": "/inc/coa/img/block_icon_warn.svg"
-                            },
-                            "g.notes": {
-                                "display": "block"
-                            },
-                            "g.notes image": {
-                                "opacity": 1,
-                                "xlink:href": "/inc/coa/img/block_icon_note_dark_on.svg"
-                            }
-                        },
-                        "block_code": "def Format_Asset_Lookup(action=None, success=None, container=None, results=None, handle=None, filtered_artifacts=None, filtered_results=None, custom_function=None, **kwargs):\n    phantom.debug('Format_Asset_Lookup() called')\n    \n    template = \"\"\"| `reverse_asset_lookup(\\\"{0}\\\")`\n| strcat asset_vendor \\\" : \\\" asset_model asset_vendor_model\n| rex field=zone \\\"level[_]*(?<zone_no>\\\\d+)\\\"\n| mvexpand zone_no\n| table asset asset_id asset_vendor_model asset_model asset_status asset_system asset_tag asset_type asset_vendor asset_version bunit category city classification country description dns exposure ip location mac nt_host owner pci_domain priority requires_av should_timesync should_update site_id vlan zone zone_no\n| rex field=ip \\\"^(?P<net_local>\\\\d+\\\\.\\\\d+)\\\"\"\"\"\n\n    # parameter list for template variable replacement\n    parameters = [\n        \"artifact:*.cef.dvc\",\n    ]\n\n    phantom.format(container=container, template=template, parameters=parameters, name=\"Format_Asset_Lookup\")\n\n    Search_OT_Asset(container=container)\n\n    return",
-                        "callback_code": "",
-                        "callback_start": 1,
-                        "callsback": false,
-                        "connected_to_start": true,
-                        "connection_name": "",
-                        "connection_type": "",
-                        "custom_callback": "",
-                        "custom_code": "",
-                        "custom_join": "",
-                        "custom_name": "Format Asset Lookup",
-                        "description": "",
-                        "format": "format",
-                        "has_custom": false,
-                        "has_custom_block": false,
-                        "has_custom_callback": false,
-                        "has_custom_join": false,
-                        "id": "395937d1-f181-4733-a787-89528b6f3559",
-                        "inPorts": [
-                            "in"
-                        ],
-                        "join_code": "",
-                        "join_optional": [],
-                        "join_start": 1,
-                        "line_end": 180,
-                        "line_start": 159,
-                        "message": "Configuring now",
-                        "name": "format",
-                        "notes": "otsec_action_check_access_acct_policy",
-                        "number": 4,
-                        "order": 9,
-                        "outPorts": [
-                            "out-1"
-                        ],
-                        "parameters": [
-                            {
-                                "position": 0,
-                                "type": "",
-                                "value": "artifact:*.cef.dvc"
-                            }
-                        ],
-                        "ports": {
-                            "groups": {
-                                "in": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "left"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "left"
-                                    }
-                                },
-                                "out": {
-                                    "attrs": {
-                                        ".port-body": {
-                                            "fill": "#fff",
-                                            "magnet": true,
-                                            "r": 10,
-                                            "stroke": "#000"
-                                        },
-                                        ".port-label": {
-                                            "fill": "#000"
-                                        }
-                                    },
-                                    "label": {
-                                        "position": {
-                                            "args": {
-                                                "y": 10
-                                            },
-                                            "name": "right"
-                                        }
-                                    },
-                                    "position": {
-                                        "name": "right"
-                                    }
-                                }
-                            }
-                        },
-                        "position": {
-                            "x": -260,
-                            "y": 80
-                        },
-                        "previous_function": "",
-                        "previous_name": "Format_Asset_Lookup",
-                        "show_number": true,
-                        "size": {
-                            "height": 100,
-                            "width": 180
-                        },
-                        "state": "format",
-                        "status": "",
-                        "template": "| `reverse_asset_lookup(\"{0}\")`\n| strcat asset_vendor \" : \" asset_model asset_vendor_model\n| rex field=zone \"level[_]*(?<zone_no>\\d+)\"\n| mvexpand zone_no\n| table asset asset_id asset_vendor_model asset_model asset_status asset_system asset_tag asset_type asset_vendor asset_version bunit category city classification country description dns exposure ip location mac nt_host owner pci_domain priority requires_av should_timesync should_update site_id vlan zone zone_no\n| rex field=ip \"^(?P<net_local>\\d+\\.\\d+)\"",
-                        "title": "format",
-                        "type": "coa.Format",
-                        "warn": false,
-                        "z": 215
+                        "z": 224
                     }
                 ]
             },
-            "notes": ""
+            "notes": "Uses a Splunk Enterprise Security instance with OT security data. See https://www.splunk.com/en_us/blog/security/splunk-for-ot-security-v2-soar-and-more.html for more information."
         },
         "python_version": "2.7",
         "schema": 4,
         "version": "4.10.2.47587"
     },
-    "create_time": "2021-06-10T21:24:32+00:00",
+    "create_time": "2021-07-15T15:47:33.870913+00:00",
     "draft_mode": false,
     "labels": [
         "*"
